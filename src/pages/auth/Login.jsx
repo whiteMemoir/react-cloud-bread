@@ -3,30 +3,24 @@ import kitchenBg from "../../authbg.png";
 const Login = () => {
 	return (
 		<div
-			className="bg-local bg-repeat"
+			className="bg-repeat bg-auto"
 			style={{
 				backgroundImage: `url(${kitchenBg})`,
+				height: "100%",
 			}}
 		>
 			<div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
 				<div class="max-w-lg mx-auto">
-					<h1 class="text-2xl font-bold text-center text-indigo-600 sm:text-3xl">
-						Get started today
-					</h1>
-
-					<p class="max-w-md mx-auto mt-4 text-center text-gray-500">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati
-						sunt dolores deleniti inventore quaerat mollitia?
-					</p>
-
 					<form
 						action=""
-						class="p-8 mt-6 mb-0 space-y-4 rounded-lg bg-slate-300 shadow-2xl"
+						class="p-8 mt-6 mb-0 space-y-4 rounded-lg bg-gray-900 shadow-2xl"
 					>
-						<p class="text-lg font-medium">Sign in to your account</p>
+						<p class="text-xl text-center font-black text-amber-300">
+							Masuk ke akun
+						</p>
 
 						<div>
-							<label for="email" class="text-sm font-medium">
+							<label for="email" class="text-sm font-medium text-yellow-100">
 								Email
 							</label>
 
@@ -58,7 +52,7 @@ const Login = () => {
 						</div>
 
 						<div>
-							<label for="password" class="text-sm font-medium">
+							<label for="password" class="text-sm font-medium text-yellow-100">
 								Password
 							</label>
 
@@ -97,14 +91,14 @@ const Login = () => {
 
 						<button
 							type="submit"
-							class="block w-full px-5 py-3 text-sm font-medium text-white bg-indigo-600 rounded-lg"
+							class="block w-full px-5 py-3 text-sm font-medium text-yellow-100 bg-indigo-600 hover:bg-indigo-500 rounded-lg"
 						>
 							Sign in
 						</button>
 
 						<p class="text-sm text-center text-gray-500">
 							No account?
-							<a class="underline" href="/">
+							<a class="underline hover:text-amber-400" href="/">
 								Sign up
 							</a>
 						</p>

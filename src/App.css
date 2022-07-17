@@ -1,0 +1,105 @@
+.nav-icon {
+	font-size: 20px;
+}
+
+.sidebar-grow {
+	flex-grow: 10;
+}
+
+.card-container p {
+	margin: 0;
+}
+.card-container > .ant-tabs-card .ant-tabs-content {
+	height: 100%;
+	margin-top: -16px;
+}
+.card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
+	padding: 3rem;
+	background: #fff;
+	border-radius: 0px 15px 15px 15px;
+}
+.card-container > .ant-tabs-card > .ant-tabs-nav::before {
+	display: none;
+}
+.card-container > .ant-tabs-card .ant-tabs-tab,
+[data-theme="compact"] .card-container > .ant-tabs-card .ant-tabs-tab {
+	background: transparent;
+	border-color: transparent;
+}
+.card-container > .ant-tabs-card .ant-tabs-tab-active,
+[data-theme="compact"] .card-container > .ant-tabs-card .ant-tabs-tab-active {
+	background: #fff;
+	border-color: white !important;
+	border-radius: 15px 15px 0 0 !important;
+}
+#components-tabs-demo-card-top .code-box-demo {
+	padding: 24px;
+	overflow: hidden;
+	background: #f5f5f5;
+}
+[data-theme="compact"] .card-container > .ant-tabs-card .ant-tabs-content {
+	height: 120px;
+	margin-top: -8px;
+}
+[data-theme="dark"] .card-container > .ant-tabs-card .ant-tabs-tab {
+	background: transparent;
+	border-color: transparent;
+}
+[data-theme="dark"] #components-tabs-demo-card-top .code-box-demo {
+	background: #000;
+}
+[data-theme="dark"]
+	.card-container
+	> .ant-tabs-card
+	.ant-tabs-content
+	> .ant-tabs-tabpane {
+	background: #141414;
+}
+[data-theme="dark"] .card-container > .ant-tabs-card .ant-tabs-tab-active {
+	background: #141414;
+	border-color: #141414;
+}
+.icon-text-white:hover {
+	color: white !important;
+}
+#control-hooks .ant-btn {
+	margin-right: 8px;
+}
+
+.pagination-list {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+.pagination-list > li > a {
+	margin: 0 6px;
+}
+.pagination-link {
+	background-color: rgb(255, 136, 0);
+	padding: 8px;
+	color: white;
+	text-decoration: none;
+	border-radius: 8px;
+}
+.previous {
+	background-color: rgb(255, 136, 0);
+	color: white;
+	padding: 7px 8px;
+	text-decoration: none;
+	border-radius: 8px;
+}
+.next {
+	background-color: rgb(255, 136, 0);
+	padding: 7px 8px;
+	color: white;
+	text-decoration: none;
+	border-radius: 8px;
+}
+.current-page {
+	background-color: rgb(255, 196, 35);
+}
+.disabled-page {
+	color: rgb(77, 77, 77);
+}

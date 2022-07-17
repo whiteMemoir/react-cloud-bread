@@ -1,0 +1,177 @@
+import { Menu, Transition } from "@headlessui/react";
+import { Fragment } from "react";
+import logoImg from "../logo-bread.png";
+import { FaUser } from "react-icons/fa";
+import { IoBagHandle, IoMenuSharp } from "react-icons/io5";
+import SearchInput from "./SearchInput";
+import { Link } from "react-router-dom";
+
+const styles = {
+	Nav: [
+		"h-14",
+		"sm:h-20",
+		"bg-white",
+		"flex items-center",
+		"sm:text-left",
+		"px-3",
+		"justify-center",
+		"sm:justify-between",
+		"w-full",
+		"fixed",
+		"z-10",
+	].join(" "),
+	NavLogo: ["sm:w-48", "w-40", "mx-5"].join(" "),
+	NavText: ["text-gray-50", "mr-14"].join(" "),
+	NavIcons: [
+		"hidden",
+		"text-gray-600",
+		"sm:flex",
+		"sm:justify-end",
+		"sm:text-xl",
+	].join(" "),
+	IconItem: ["mx-3", "sm:hover:text-orange-500"].join(" "),
+	MobileMenuIcon: ["fixed", "right-7", "w-56", "text-right", "sm:hidden"].join(
+		" "
+	),
+	MobileMenu: ["relative", "inline-block", "text-left"].join(" "),
+	MobileMenuButton: [
+		"inline-flex",
+		"w-full",
+		"justify-center",
+		"rounded-md",
+		"bg-black",
+		"bg-opacity-20",
+		"px-4",
+		"py-2",
+		"text-sm",
+		"font-medium",
+		"text-white",
+		"hover:bg-opacity-30",
+		"focus:outline-none",
+		"focus-visible:ring-2",
+		"focus-visible:ring-white",
+		"focus-visible:ring-opacity-75",
+	].join(" "),
+	MobileMenuItems: [
+		"hover:text-white",
+		"absolute",
+		"right-0",
+		"mt-2",
+		"w-56",
+		"origin-top-right",
+		"divide-y",
+		"divide-gray-100",
+		"rounded-md",
+		"bg-white",
+		"shadow-lg",
+		"ring-1",
+		"ring-black",
+		"ring-opacity-5",
+		"focus:outline-none",
+	].join(" "),
+	MobileMenuItemActive: [
+		"bg-orange-400",
+		"text-white",
+		"group",
+		"flex",
+		"w-full",
+		"items-center",
+		"rounded-md",
+		"px-2",
+		"py-2",
+		"text-sm",
+	].join(" "),
+	MobileMenuItemInactive: [
+		"text-gray-900",
+		"hover:!text-white",
+		"group",
+		"flex",
+		"w-full",
+		"items-center",
+		"rounded-md",
+		"px-2",
+		"py-2",
+		"text-sm",
+	].join(" "),
+};
+
+const Navbar = () => {
+	return (
+		<div className={styles.Nav}>
+			<div className={styles.NavLogo}>
+				<Link to="/">
+					<img src={logoImg} alt="" />
+				</Link>
+			</div>
+			<div>
+				<SearchInput />
+			</div>
+			<div className={styles.NavIcons}>
+				<Link to="/cart" className={styles.IconItem}>
+					<div>
+						<IoBagHandle />
+					</div>
+				</Link>
+				<Link to="/account" className={`${styles.IconItem} mr-5`}>
+					<div>
+						<FaUser />
+					</div>
+				</Link>
+			</div>
+			{/* Mobile dropdown menu */}
+			<div className={styles.MobileMenuIcon}>
+				<Menu as="div" className={styles.MobileMenu}>
+					<div>
+						<Menu.Button className={styles.MobileMenuButton}>
+							<IoMenuSharp />
+						</Menu.Button>
+					</div>
+					<Transition
+						as={Fragment}
+						enter="transition ease-out duration-100"
+						enterFrom="transform opacity-0 scale-95"
+						enterTo="transform opacity-100 scale-100"
+						leave="transition ease-in duration-75"
+						leaveFrom="transform opacity-100 scale-100"
+						leaveTo="transform opacity-0 scale-95"
+					>
+						<Menu.Items className={styles.MobileMenuItems}>
+							<div className="px-1 py-1">
+								<Menu.Item>
+									{({ active }) => (
+										<Link
+											to="/account"
+											className={`${
+												active
+													? styles.MobileMenuItemActive
+													: styles.MobileMenuItemInactive
+											} icon-text-white`}
+										>
+											<FaUser /> <span className="ml-3">Akun</span>
+										</Link>
+									)}
+								</Menu.Item>
+								<Menu.Item>
+									{({ active }) => (
+										<Link
+											to="/cart"
+											className={`${
+												active
+													? styles.MobileMenuItemActive
+													: styles.MobileMenuItemInactive
+											} icon-text-white`}
+										>
+											<IoBagHandle /> <span className="ml-3">Keranjang</span>
+										</Link>
+									)}
+								</Menu.Item>
+							</div>
+						</Menu.Items>
+					</Transition>
+				</Menu>
+			</div>
+		</div>
+	);
+};
+
+export default Navbar;

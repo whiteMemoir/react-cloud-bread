@@ -10,29 +10,29 @@ import Invoices from "./pages/Invoices";
 import NotFound from "./pages/NotFound";
 import HomeLayout from "./contexts/Home/HomeLayout";
 import AccountLayout from "./contexts/Account/AccountLayout";
-import { AuthProvider } from "./contexts/AuthContext";
+import AuthLayout from "./contexts/Auth/AuthLayout";
 
 function App() {
 	return (
 		<div className="App">
-			<AuthProvider>
-				<BrowserRouter>
-					<Routes>
+			<BrowserRouter>
+				<Routes>
+					<Route element={<AuthLayout />}>
 						<Route path="*" element={<NotFound />} />
 						<Route element={<HomeLayout />}>
 							<Route path="/" element={<Home />} />
 						</Route>
-						<Route path="/login" element={<Login />} />
-						<Route path="/register" element={<Register />} />
 						<Route element={<AccountLayout />}>
 							<Route path="/account" element={<Account />} />
 						</Route>
+						<Route path="/login" element={<Login />} />
+						<Route path="/register" element={<Register />} />
 						<Route path="/cart" element={<Cart />} />
 						<Route path="/checkout" element={<Checkout />} />
 						<Route path="/invoices" element={<Invoices />} />
-					</Routes>
-				</BrowserRouter>
-			</AuthProvider>
+					</Route>
+				</Routes>
+			</BrowserRouter>
 		</div>
 	);
 }

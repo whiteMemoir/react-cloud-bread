@@ -1,10 +1,12 @@
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import logoImg from "../logo-bread.png";
 import { FaUser } from "react-icons/fa";
 import { IoBagHandle, IoMenuSharp } from "react-icons/io5";
 import SearchInput from "./SearchInput";
 import { Link } from "react-router-dom";
+import { Tooltip } from "antd";
+import AuthContext from "../contexts/Auth/AuthContext";
 
 const styles = {
 	Nav: [
@@ -95,7 +97,9 @@ const styles = {
 	].join(" "),
 };
 
-const Navbar = () => {
+const Navbar = ({ home }) => {
+	const { isHome, setIsHome, user } = useContext(AuthContext);
+	setIsHome(home);
 	return (
 		<div className={styles.Nav}>
 			<div className={styles.NavLogo}>
@@ -103,21 +107,36 @@ const Navbar = () => {
 					<img src={logoImg} alt="" />
 				</Link>
 			</div>
-			<div>
-				<SearchInput />
-			</div>
-			<div className={styles.NavIcons}>
-				<Link to="/cart" className={styles.IconItem}>
-					<div>
-						<IoBagHandle />
-					</div>
-				</Link>
-				<Link to="/account" className={`${styles.IconItem} mr-5`}>
-					<div>
-						<FaUser />
-					</div>
-				</Link>
-			</div>
+			<div>{isHome ? <SearchInput /> : ""}</div>
+			{user !== null ? (
+				<div className={`${styles.NavIcons}`}>
+					<Tooltip title="keranjang" color="volcano" placement="bottomRight">
+						<Link to="/cart" className={styles.IconItem}>
+							<div>
+								<IoBagHandle />
+							</div>
+						</Link>
+					</Tooltip>
+					<Tooltip title="akun" color="volcano" placement="bottomRight">
+						<Link to="/account" className={`${styles.IconItem} mr-5`}>
+							<div>
+								<FaUser />
+							</div>
+						</Link>
+					</Tooltip>
+				</div>
+			) : (
+				<div className={`${styles.NavIcons}`}>
+					<Tooltip title="login" color="volcano" placement="bottomRight">
+						<Link to="/login" className={`${styles.IconItem} mr-5`}>
+							<div>
+								<FaUser />
+							</div>
+						</Link>
+					</Tooltip>
+				</div>
+			)}
+
 			{/* Mobile dropdown menu */}
 			<div className={styles.MobileMenuIcon}>
 				<Menu as="div" className={styles.MobileMenu}>
@@ -136,36 +155,55 @@ const Navbar = () => {
 						leaveTo="transform opacity-0 scale-95"
 					>
 						<Menu.Items className={styles.MobileMenuItems}>
-							<div className="px-1 py-1">
-								<Menu.Item>
-									{({ active }) => (
-										<Link
-											to="/account"
-											className={`${
-												active
-													? styles.MobileMenuItemActive
-													: styles.MobileMenuItemInactive
-											} icon-text-white`}
-										>
-											<FaUser /> <span className="ml-3">Akun</span>
-										</Link>
-									)}
-								</Menu.Item>
-								<Menu.Item>
-									{({ active }) => (
-										<Link
-											to="/cart"
-											className={`${
-												active
-													? styles.MobileMenuItemActive
-													: styles.MobileMenuItemInactive
-											} icon-text-white`}
-										>
-											<IoBagHandle /> <span className="ml-3">Keranjang</span>
-										</Link>
-									)}
-								</Menu.Item>
-							</div>
+							{user !== null ? (
+								<div className="px-1 py-1">
+									<Menu.Item>
+										{({ active }) => (
+											<Link
+												to="/account"
+												className={`${
+													active
+														? styles.MobileMenuItemActive
+														: styles.MobileMenuItemInactive
+												} icon-text-white`}
+											>
+												<FaUser /> <span className="ml-3">Akun</span>
+											</Link>
+										)}
+									</Menu.Item>
+									<Menu.Item>
+										{({ active }) => (
+											<Link
+												to="/cart"
+												className={`${
+													active
+														? styles.MobileMenuItemActive
+														: styles.MobileMenuItemInactive
+												} icon-text-white`}
+											>
+												<IoBagHandle /> <span className="ml-3">Keranjang</span>
+											</Link>
+										)}
+									</Menu.Item>
+								</div>
+							) : (
+								<div className="px-1 py-1">
+									<Menu.Item>
+										{({ active }) => (
+											<Link
+												to="/login"
+												className={`${
+													active
+														? styles.MobileMenuItemActive
+														: styles.MobileMenuItemInactive
+												} icon-text-white`}
+											>
+												<FaUser /> <span className="ml-3">Akun</span>
+											</Link>
+										)}
+									</Menu.Item>
+								</div>
+							)}
 						</Menu.Items>
 					</Transition>
 				</Menu>

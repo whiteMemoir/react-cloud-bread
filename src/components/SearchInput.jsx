@@ -27,7 +27,6 @@ const SearchInput = () => {
 						type="text"
 						className="w-50 sm:w-60 md:w-96 py-2 pl-10 pr-4 text-gray-700 bg-white border rounded-md focus:border-yellow-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-yellow-300"
 						placeholder="Search"
-						value={keyword}
 						onChange={(e) => setKeyword(e.target.value)}
 					/>
 				</div>

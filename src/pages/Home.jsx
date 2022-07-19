@@ -6,17 +6,25 @@ import Navbar from "../components/Navbar";
 import Product from "../components/Home/Product";
 import ProductList from "../components/Home/ProductList";
 import SidebarFilter from "../components/Home/SidebarFilter";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Paginate from "../components/Home/Paginate";
 import HomeContext from "../contexts/Home/HomeContext";
+import AuthContext from "../contexts/Auth/AuthContext";
 
 const Home = () => {
 	const { products, categories, tags } = useContext(HomeContext);
-
+	const { me, user } = useContext(AuthContext);
+	const [token, setToken] = useState(localStorage.getItem("token"));
+	useEffect(() => {
+		if (token) {
+			me(token);
+		}
+	}, [token]);
+	console.log(user);
 	return (
 		<>
 			<header>
-				<Navbar />
+				<Navbar home={true} />
 			</header>
 			<Filler />
 			<div className="bg-zinc-100">

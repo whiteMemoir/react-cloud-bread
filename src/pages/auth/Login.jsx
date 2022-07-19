@@ -1,19 +1,88 @@
+import { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import kitchenBg from "../../authbg.png";
+import AuthContext from "../../contexts/Auth/AuthContext";
 
 const Login = () => {
+	const navigate = useNavigate();
+	const { loginUser, user } = useContext(AuthContext);
+	const [loginData, setLoginData] = useState({
+		email: null,
+		password: null,
+	});
+	const [errorMsg, setErrorMsg] = useState({
+		email: "",
+		password: "",
+	});
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setLoginData((prevState) => ({ ...prevState, [name]: value }));
+	};
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		if (validate()) {
+			await loginUser(loginData);
+			console.log(user);
+			if (user) {
+				if (user.error !== 1) {
+					navigate("/");
+				} else {
+					setErrorMsg((prevState) => ({
+						...prevState,
+						loginCheck: user.message,
+					}));
+				}
+			}
+		}
+	};
+	const validate = () => {
+		let isValid = true;
+
+		if (loginData.email === null) {
+			isValid = false;
+			setErrorMsg((prevState) => ({
+				...prevState,
+				email: "Masukkan email Anda.",
+			}));
+		}
+		if (typeof loginData.email !== "undefined") {
+			let pattern = new RegExp(
+				/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+			);
+			if (!pattern.test(loginData.email)) {
+				isValid = false;
+				setErrorMsg((prevState) => ({
+					...prevState,
+					email: "Please enter valid email address.",
+				}));
+			}
+		}
+		if (loginData.password === null) {
+			isValid = false;
+			setErrorMsg((prevState) => ({
+				...prevState,
+				password: "Masukkan password.",
+			}));
+		}
+
+		return isValid;
+	};
 	return (
 		<div
 			className="bg-repeat bg-auto"
 			style={{
-				backgroundImage: `url(${kitchenBg})`,
+				backgroundImage: `linear-gradient(
+			rgba(255, 209, 149, 0.7),
+			rgba(255, 255, 255, 0.5)
+		),url(${kitchenBg})`,
 				height: "100%",
 			}}
 		>
 			<div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
 				<div class="max-w-lg mx-auto">
 					<form
-						action=""
 						class="p-8 mt-6 mb-0 space-y-4 rounded-lg bg-gray-900 shadow-2xl"
+						onSubmit={handleSubmit}
 					>
 						<p class="text-xl text-center font-black text-amber-300">
 							Masuk ke akun
@@ -29,7 +98,9 @@ const Login = () => {
 									type="email"
 									id="email"
 									class="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
-									placeholder="Enter email"
+									placeholder="Masukkan email"
+									name="email"
+									onChange={handleChange}
 								/>
 
 								<span class="absolute inset-y-0 inline-flex items-center right-4">
@@ -48,6 +119,9 @@ const Login = () => {
 										/>
 									</svg>
 								</span>
+								<p className="text-left text-sm text-red-400 mt-1">
+									{errorMsg.email}
+								</p>
 							</div>
 						</div>
 
@@ -61,7 +135,9 @@ const Login = () => {
 									type="password"
 									id="password"
 									class="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
-									placeholder="Enter password"
+									placeholder="Masukkan password"
+									name="password"
+									onChange={handleChange}
 								/>
 
 								<span class="absolute inset-y-0 inline-flex items-center right-4">
@@ -86,22 +162,34 @@ const Login = () => {
 										/>
 									</svg>
 								</span>
+								<p className="text-left text-sm text-red-400 mt-1">
+									{errorMsg.password}
+								</p>
 							</div>
 						</div>
 
 						<button
 							type="submit"
-							class="block w-full px-5 py-3 text-sm font-medium text-yellow-100 bg-indigo-600 hover:bg-indigo-500 rounded-lg"
+							class="disabled:bg-gray-500 disabled:text-gray-800 block w-full px-5 py-3 text-sm font-medium text-yellow-100 bg-indigo-600 hover:bg-indigo-500 rounded-lg"
 						>
-							Sign in
+							Login
 						</button>
-
-						<p class="text-sm text-center text-gray-500">
-							No account?
-							<a class="underline hover:text-amber-400" href="/">
-								Sign up
-							</a>
+						<p className="text-left text-sm text-red-400 mt-1">
+							{errorMsg.loginCheck}
 						</p>
+						<div className="flex justify-between">
+							<p class="text-sm text-gray-500 inline-block">
+								Belum punya akun?
+								<Link class="underline hover:text-amber-400" to="/register">
+									Daftar di sini
+								</Link>
+							</p>
+							<p class="text-sm text-gray-500 inline-block">
+								<Link class="underline hover:text-amber-400" to="/">
+									Lihat produk tanpa masuk
+								</Link>
+							</p>
+						</div>
 					</form>
 				</div>
 			</div>
@@ -110,6 +198,3 @@ const Login = () => {
 };
 
 export default Login;
-
-//#1E293B
-//#1F2937

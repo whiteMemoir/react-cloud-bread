@@ -38,7 +38,6 @@ const styles = {
 	].join(" "),
 };
 const Product = (props) => {
-	// console.log(props);
 	return (
 		<div className={styles.CardStyle}>
 			<a href="/">

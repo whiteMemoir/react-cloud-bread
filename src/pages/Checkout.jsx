@@ -8,7 +8,7 @@ const Checkout = () => {
 	return (
 		<>
 			<header>
-				<Navbar />
+				<Navbar home={false} />
 			</header>
 			<Filler />
 			<main className="sm:flex sm:flex-wrap bg-zinc-100 min-h-full justify-center">

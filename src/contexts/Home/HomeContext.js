@@ -80,11 +80,11 @@ export const HomeProvider = ({ children }) => {
 				rows,
 				page,
 				pages,
+				keyword,
 				setPage,
 				setCategory,
 				setTag,
 				setKeyword,
-				keyword,
 				changePage,
 			}}
 		>

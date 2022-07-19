@@ -14,9 +14,10 @@ const AccountTabs = () => {
 	console.log(token);
 	const logoutHandle = async () => {
 		alert("Apakah Anda yakin?");
-		await logoutUser(token);
-		setToken(null);
-		navigate("../", { replace: true });
+		const logoutResponse = await logoutUser(token);
+		console.log(logoutResponse);
+		// setToken(null);
+		// navigate("../", { replace: true });
 		// navigate(0);
 	};
 	return (

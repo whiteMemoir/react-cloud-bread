@@ -21,8 +21,8 @@ const Login = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (validate()) {
-			await loginUser(loginData);
-			console.log(user);
+			const loginResponse = await loginUser(loginData);
+			console.log(loginResponse);
 			if (user) {
 				if (user.error !== 1) {
 					navigate("/");

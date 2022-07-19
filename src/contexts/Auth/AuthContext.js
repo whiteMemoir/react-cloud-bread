@@ -27,9 +27,11 @@ export const AuthProvider = ({ children }) => {
 		await axios.post(`${config.api_host}/auth/login`, data).then((res) => {
 			localStorage.setItem("token", res.data.token);
 			setUser(res.data);
+			console.log(res);
 			if (res.data.error === 1) {
 				localStorage.removeItem("token");
 			}
+			return res;
 		});
 	};
 	const logoutUser = async (token) => {

@@ -14,7 +14,7 @@ import AuthContext from "../contexts/Auth/AuthContext";
 const Home = () => {
 	const { products, categories, tags } = useContext(HomeContext);
 	const { me, user } = useContext(AuthContext);
-	const [token, setToken] = useState(localStorage.getItem("token"));
+	const token = localStorage.getItem("token");
 	useEffect(() => {
 		if (token) {
 			me(token);

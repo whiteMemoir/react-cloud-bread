@@ -1,6 +1,8 @@
 import { Space, Table, Tag } from "antd";
 import AddAddress from "./AddAddress";
 import EmptyData from "../EmptyData";
+import AddressContext from "../../contexts/Address/AddressContext";
+import { useContext } from "react";
 
 const columns = [
 	{
@@ -45,18 +47,21 @@ const data = [
 ];
 
 const AccountAddress = () => {
+	const { getAddress } = useContext(AddressContext);
+	const token = localStorage.getItem("token");
+
 	return (
 		<div>
 			<button className="bg-sky-500 hover:bg-sky-400 px-3 py-1 mb-7 rounded-md text-white">
 				Tambah Alamat
 			</button>
-			<div className="hidden">
+			<div className="">
 				<EmptyData />
 			</div>
-			<div className="">
+			<div className="hidden">
 				<AddAddress />
 			</div>
-			<Table className="" columns={columns} dataSource={data} />
+			<Table className="hidden" columns={columns} dataSource={data} />
 		</div>
 	);
 };

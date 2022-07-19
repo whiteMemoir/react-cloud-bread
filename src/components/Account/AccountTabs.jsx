@@ -9,16 +9,15 @@ const { TabPane } = Tabs;
 
 const AccountTabs = () => {
 	const navigate = useNavigate();
-	const { logoutUser } = useContext(AuthContext);
-	const [token, setToken] = useState(localStorage.getItem("token"));
-	console.log(token);
+	const { logoutUser, setUser } = useContext(AuthContext);
+	const token = localStorage.getItem("token");
+
 	const logoutHandle = async () => {
 		alert("Apakah Anda yakin?");
-		const logoutResponse = await logoutUser(token);
-		console.log(logoutResponse);
-		// setToken(null);
-		// navigate("../", { replace: true });
-		// navigate(0);
+		await logoutUser(token);
+		localStorage.removeItem("token");
+		setUser(null);
+		navigate("../", { replace: true });
 	};
 	return (
 		<div className="card-container py-8 w-11/12 rounded-md">

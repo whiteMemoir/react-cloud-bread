@@ -20,32 +20,26 @@ export const AuthProvider = ({ children }) => {
 				}
 			});
 	};
-	const registerUser = (data) => {
-		axios.post(`${config.api_host}/auth/register`, data);
+	const registerUser = async (data) => {
+		return await axios.post(`${config.api_host}/auth/register`, data);
 	};
 	const loginUser = async (data) => {
-		await axios.post(`${config.api_host}/auth/login`, data).then((res) => {
-			localStorage.setItem("token", res.data.token);
-			setUser(res.data);
-			console.log(res);
-			if (res.data.error === 1) {
-				localStorage.removeItem("token");
-			}
-			return res;
-		});
+		return await axios.post(`${config.api_host}/auth/login`, data);
+		// .then((res) => res);
+		// .then((res) => {
+		// 	localStorage.setItem("token", res.data.token);
+		// 	setUser(res.data);
+		// 	if (res.data.error === 1) {
+		// 		localStorage.removeItem("token");
+		// 	}
+		// });
 	};
 	const logoutUser = async (token) => {
-		await axios
-			.post(`${config.api_host}/auth/logout`, null, {
-				headers: {
-					authorization: `Bearer ${token}`,
-				},
-			})
-			.then((res) => {
-				localStorage.removeItem("token");
-				setUser(null);
-				console.log(res);
-			});
+		return await axios.post(`${config.api_host}/auth/logout`, null, {
+			headers: {
+				authorization: `Bearer ${token}`,
+			},
+		});
 	};
 
 	return (
@@ -58,6 +52,7 @@ export const AuthProvider = ({ children }) => {
 				setIsHome,
 				me,
 				user,
+				setUser,
 			}}
 		>
 			{children}

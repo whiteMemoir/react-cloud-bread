@@ -2,7 +2,7 @@ import { useContext } from "react";
 import HomeContext from "../contexts/Home/HomeContext";
 
 const SearchInput = () => {
-	const { keyword, setKeyword } = useContext(HomeContext);
+	const { setKeyword } = useContext(HomeContext);
 	return (
 		<div>
 			<div className="mx-10 hidden sm:block">

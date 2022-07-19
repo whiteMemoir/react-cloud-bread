@@ -5,7 +5,16 @@ import AuthContext from "../../contexts/Auth/AuthContext";
 
 const Register = () => {
 	const navigate = useNavigate();
-	const { registerUser } = useContext(AuthContext);
+	const token = localStorage.getItem("token");
+	const { registerUser, me, user } = useContext(AuthContext);
+	if (token) {
+		me(token);
+		if (user !== null) {
+			if (user.role === "user") {
+				navigate("/");
+			}
+		}
+	}
 	const [registerData, setRegisterData] = useState({
 		full_name: null,
 		email: null,
@@ -113,7 +122,7 @@ const Register = () => {
 						</p>
 						<div>
 							<label
-								for="full_name"
+								htmlFor="full_name"
 								class="text-sm font-medium text-yellow-100"
 							>
 								Nama lengkap
@@ -134,7 +143,10 @@ const Register = () => {
 							</p>
 						</div>
 						<div>
-							<label for="email" class="text-sm font-medium text-yellow-100">
+							<label
+								htmlFor="email"
+								class="text-sm font-medium text-yellow-100"
+							>
 								Email
 							</label>
 
@@ -156,9 +168,9 @@ const Register = () => {
 										stroke="currentColor"
 									>
 										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth="2"
 											d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
 										/>
 									</svg>
@@ -169,7 +181,10 @@ const Register = () => {
 							</div>
 						</div>
 						<div>
-							<label for="password" class="text-sm font-medium text-yellow-100">
+							<label
+								htmlFor="password"
+								class="text-sm font-medium text-yellow-100"
+							>
 								Password
 							</label>
 
@@ -192,15 +207,15 @@ const Register = () => {
 										stroke="currentColor"
 									>
 										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth="2"
 											d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
 										/>
 										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth="2"
 											d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
 										/>
 									</svg>
@@ -212,7 +227,7 @@ const Register = () => {
 						</div>
 						<div>
 							<label
-								for="confirm_password"
+								htmlFor="confirm_password"
 								class="text-sm font-medium text-yellow-100"
 							>
 								Konfirmasi Password
@@ -237,15 +252,15 @@ const Register = () => {
 										stroke="currentColor"
 									>
 										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth="2"
 											d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
 										/>
 										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth="2"
 											d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
 										/>
 									</svg>

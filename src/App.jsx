@@ -9,8 +9,8 @@ import Checkout from "./pages/Checkout";
 import Invoices from "./pages/Invoices";
 import NotFound from "./pages/NotFound";
 import HomeLayout from "./contexts/Home/HomeLayout";
-import AccountLayout from "./contexts/Account/AccountLayout";
 import AuthLayout from "./contexts/Auth/AuthLayout";
+import AddressLayout from "./contexts/Address/AddressLayout";
 
 function App() {
 	return (
@@ -22,7 +22,7 @@ function App() {
 						<Route element={<HomeLayout />}>
 							<Route path="/" element={<Home />} />
 						</Route>
-						<Route element={<AccountLayout />}>
+						<Route element={<AddressLayout />}>
 							<Route path="/account" element={<Account />} />
 						</Route>
 						<Route path="/login" element={<Login />} />

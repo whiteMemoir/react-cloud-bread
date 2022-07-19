@@ -1,7 +1,7 @@
 import { Button, Form, Input, Select } from "antd";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import TextArea from "antd/lib/input/TextArea";
-import AccountContext from "../../contexts/Account/AccountContext";
+import AddressContext from "../../contexts/Address/AddressContext";
 const { Option } = Select;
 const layout = {
 	labelCol: {
@@ -28,7 +28,7 @@ const AddAddress = () => {
 		setProvince,
 		setRegency,
 		setDistrict,
-	} = useContext(AccountContext);
+	} = useContext(AddressContext);
 
 	const onFinish = (values) => {
 		console.log(values);

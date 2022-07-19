@@ -8,7 +8,7 @@ import AuthContext from "../contexts/Auth/AuthContext";
 import NotFound from "./NotFound";
 
 const Account = () => {
-	const [token, setToken] = useState(localStorage.getItem("token"));
+	const token = localStorage.getItem("token");
 	const { me, user } = useContext(AuthContext);
 	useEffect(() => {
 		if (token !== null) {

@@ -5,7 +5,12 @@ import config from "../../config";
 const AddressContext = createContext();
 
 export const AddressProvider = ({ children }) => {
-	const [addresses, setAddresses] = useState();
+	const [isSetProvince, setIsSetProvince] = useState(false);
+	const [isSetRegency, setIsSetRegency] = useState(true);
+	const [isSetDistrict, setIsSetDistrict] = useState(true);
+	const [isSetVillage, setIsSetVillage] = useState(true);
+
+	const [addresses, setAddresses] = useState(null);
 	const [provinceData, setProvinceData] = useState([]);
 	const [regencyData, setRegencyData] = useState([]);
 	const [districtData, setDistrictData] = useState([]);
@@ -15,40 +20,48 @@ export const AddressProvider = ({ children }) => {
 	const [district, setDistrict] = useState(null);
 
 	useEffect(() => {
-		axios
-			.get(`${config.api_region}/provinces.json`)
-			.then((res) => setProvinceData(res.data));
-		if (province !== null) {
+		if (!isSetProvince) {
+			axios
+				.get(`${config.api_region}/provinces.json`)
+				.then((res) => setProvinceData(res.data));
+
+			setIsSetProvince(true);
+			setIsSetRegency(false);
+		}
+	}, [provinceData, isSetProvince]);
+	useEffect(() => {
+		if (province !== null && !isSetRegency) {
 			const provinceDetail = provinceData.filter(
 				(item) => item.name === province
 			);
 			axios
 				.get(`${config.api_region}/regencies/${provinceDetail[0].id}.json`)
 				.then((res) => setRegencyData(res.data));
+			setIsSetRegency(true);
+			setIsSetDistrict(false);
 		}
-		if (regency !== null) {
+	}, [province, regencyData, isSetRegency]);
+	useEffect(() => {
+		if (regency !== null && !isSetDistrict) {
 			const regencyDetail = regencyData.filter((item) => item.name === regency);
 			axios
 				.get(`${config.api_region}/districts/${regencyDetail[0].id}.json`)
 				.then((res) => setDistrictData(res.data));
+			setIsSetDistrict(true);
+			setIsSetVillage(false);
 		}
-		if (district !== null) {
+	}, [regency, districtData, isSetDistrict]);
+	useEffect(() => {
+		if (district !== null && !isSetVillage) {
 			const districtDetail = districtData.filter(
 				(item) => item.name === district
 			);
 			axios
 				.get(`${config.api_region}/villages/${districtDetail[0].id}.json`)
 				.then((res) => setVillageData(res.data));
+			setIsSetVillage(true);
 		}
-	}, [
-		province,
-		regency,
-		district,
-		provinceData,
-		regencyData,
-		districtData,
-		villageData,
-	]);
+	}, [district, villageData, isSetVillage]);
 
 	const getAddress = async (token) => {
 		return await axios
@@ -57,7 +70,7 @@ export const AddressProvider = ({ children }) => {
 					authorization: `Bearer ${token}`,
 				},
 			})
-			.then((res) => setAddresses(res));
+			.then((res) => setAddresses(res.data));
 	};
 
 	const createAddress = async (token, data) => {
@@ -67,7 +80,6 @@ export const AddressProvider = ({ children }) => {
 			},
 		});
 	};
-
 	return (
 		<AddressContext.Provider
 			value={{
@@ -80,6 +92,7 @@ export const AddressProvider = ({ children }) => {
 				setDistrict,
 				getAddress,
 				createAddress,
+				addresses,
 			}}
 		>
 			{children}

@@ -1,15 +1,14 @@
-import { Space, Table, Tag } from "antd";
+import { Space, Table } from "antd";
 import AddAddress from "./AddAddress";
 import EmptyData from "../EmptyData";
 import AddressContext from "../../contexts/Address/AddressContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const columns = [
 	{
 		title: "Nama",
 		dataIndex: "nama",
 		key: "nama",
-		render: (text) => <a>{text}</a>,
 	},
 	{
 		title: "Detail",
@@ -28,40 +27,67 @@ const columns = [
 		),
 	},
 ];
-const data = [
-	{
-		key: "1",
-		nama: "London",
-		detail: "London No. 1 Lake Park",
-	},
-	{
-		key: "2",
-		nama: "New York",
-		detail: "London No. 1 Lake Park",
-	},
-	{
-		key: "3",
-		nama: "Los Angeles",
-		detail: "London No. 1 Lake Park",
-	},
-];
 
 const AccountAddress = () => {
-	const { getAddress } = useContext(AddressContext);
+	const { getAddress, addresses } = useContext(AddressContext);
+	const [isData, setIsData] = useState(false);
+	const [isSet, setIsSet] = useState(false);
+	const [buttonText, setButtonText] = useState("Tambah Alamat");
 	const token = localStorage.getItem("token");
+	let data;
+	useEffect(() => {
+		if (!isSet) {
+			getAddress(token);
+			console.log(addresses);
+			if (addresses) {
+				console.log(addresses.count);
+				if (addresses.count !== 0) {
+					setIsData(true);
+				}
+				setIsSet(true);
+			}
+		}
+	}, [addresses, isSet]);
+	console.log(isData);
+	console.log(addresses);
+
+	const handleClick = () => {
+		if (buttonText === "Tambah Alamat") {
+			setButtonText("Kembali");
+		} else if (buttonText === "Kembali") {
+			setButtonText("Tambah Alamat");
+		}
+	};
+	if (addresses) {
+		data = addresses.data.map((address, index) => ({
+			key: index,
+			nama: address.nama,
+			detail: `${address.provinsi}, ${address.kabupaten}, ${address.kecamatan}, ${address.kelurahan}, Detail : ${address.detail}`,
+		}));
+	}
 
 	return (
 		<div>
-			<button className="bg-sky-500 hover:bg-sky-400 px-3 py-1 mb-7 rounded-md text-white">
-				Tambah Alamat
+			<button
+				onClick={handleClick}
+				className="bg-sky-500 hover:bg-sky-400 px-3 py-1 mb-7 rounded-md text-white"
+			>
+				{buttonText}
 			</button>
-			<div className="">
-				<EmptyData />
+			<div className={buttonText === "Kembali" ? "hidden" : ""}>
+				<div className={isData ? "hidden" : ""}>
+					<EmptyData />
+				</div>
+				<Table
+					className={isData ? "" : "hidden"}
+					columns={columns}
+					dataSource={data}
+				/>
 			</div>
-			<div className="hidden">
+
+			<div className={buttonText === "Kembali" ? "" : "hidden"}>
 				<AddAddress />
 			</div>
-			<Table className="hidden" columns={columns} dataSource={data} />
 		</div>
 	);
 };

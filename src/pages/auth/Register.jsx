@@ -34,10 +34,10 @@ const Register = () => {
 		}
 		setRegisterData((prevState) => ({ ...prevState, [name]: value }));
 	};
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (validate()) {
-			registerUser(registerData);
+			await registerUser(registerData);
 			alert("Registrasi berhasil!");
 			navigate("/login");
 		}

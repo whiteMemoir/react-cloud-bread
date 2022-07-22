@@ -20,6 +20,8 @@ const tailLayout = {
 
 const AddAddress = () => {
 	const [form] = Form.useForm();
+	const token = localStorage.getItem("token");
+
 	const {
 		provinceData,
 		regencyData,
@@ -28,10 +30,17 @@ const AddAddress = () => {
 		setProvince,
 		setRegency,
 		setDistrict,
+		createAddress,
 	} = useContext(AddressContext);
 
-	const onFinish = (values) => {
-		console.log(values);
+	const onFinish = async (values) => {
+		const response = await createAddress(token, values);
+		if (response) {
+			if (response.error !== 1) {
+				alert(`Alamat ${values.nama} berhasil ditambahkan`);
+				form.resetFields();
+			}
+		}
 	};
 	const onReset = () => {
 		form.resetFields();

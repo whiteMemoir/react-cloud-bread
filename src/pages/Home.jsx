@@ -35,6 +35,14 @@ const Home = () => {
 						})}
 				</div>
 			</div>
+			{user !== null ? (
+				""
+			) : (
+				<div className="text-center text-lg font-bold text-orange-400 bg-zinc-100">
+					<p className=" mb-0">Login untuk belanja!</p>
+				</div>
+			)}
+
 			<main className="sm:flex sm:flex-wrap bg-zinc-100">
 				{tags.length > 0 && <SidebarFilter />}
 				<div className="sidebar-grow basis-0">

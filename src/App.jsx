@@ -11,6 +11,8 @@ import NotFound from "./pages/NotFound";
 import HomeLayout from "./contexts/Home/HomeLayout";
 import AuthLayout from "./contexts/Auth/AuthLayout";
 import AddressLayout from "./contexts/Address/AddressLayout";
+import CartLayout from "./contexts/Cart/CartLayout";
+import OrderLayout from "./contexts/Order/OrderLayout";
 
 function App() {
 	return (
@@ -19,17 +21,21 @@ function App() {
 				<Routes>
 					<Route element={<AuthLayout />}>
 						<Route path="*" element={<NotFound />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/register" element={<Register />} />
 						<Route element={<HomeLayout />}>
 							<Route path="/" element={<Home />} />
 						</Route>
 						<Route element={<AddressLayout />}>
-							<Route path="/account" element={<Account />} />
+							<Route element={<CartLayout />}>
+								<Route element={<OrderLayout />}>
+									<Route path="/account" element={<Account />} />
+									<Route path="/cart" element={<Cart />} />
+									<Route path="/checkout" element={<Checkout />} />
+									<Route path="/invoices" element={<Invoices />} />
+								</Route>
+							</Route>
 						</Route>
-						<Route path="/login" element={<Login />} />
-						<Route path="/register" element={<Register />} />
-						<Route path="/cart" element={<Cart />} />
-						<Route path="/checkout" element={<Checkout />} />
-						<Route path="/invoices" element={<Invoices />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

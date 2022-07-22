@@ -20,7 +20,6 @@ const Home = () => {
 			me(token);
 		}
 	}, [token]);
-	console.log(user);
 	return (
 		<>
 			<header>

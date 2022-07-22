@@ -38,9 +38,7 @@ const AccountAddress = () => {
 	useEffect(() => {
 		if (!isSet) {
 			getAddress(token);
-			console.log(addresses);
 			if (addresses) {
-				console.log(addresses.count);
 				if (addresses.count !== 0) {
 					setIsData(true);
 				}
@@ -48,8 +46,6 @@ const AccountAddress = () => {
 			}
 		}
 	}, [addresses, isSet]);
-	console.log(isData);
-	console.log(addresses);
 
 	const handleClick = () => {
 		if (buttonText === "Tambah Alamat") {

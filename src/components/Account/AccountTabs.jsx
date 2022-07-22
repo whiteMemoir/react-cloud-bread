@@ -13,11 +13,12 @@ const AccountTabs = () => {
 	const token = localStorage.getItem("token");
 
 	const logoutHandle = async () => {
-		alert("Apakah Anda yakin?");
-		await logoutUser(token);
-		localStorage.removeItem("token");
-		setUser(null);
-		navigate("../", { replace: true });
+		if (window.confirm("Apakah Anda yakin?")) {
+			await logoutUser(token);
+			localStorage.removeItem("token");
+			setUser(null);
+			navigate("../", { replace: true });
+		}
 	};
 	return (
 		<div className="card-container py-8 w-11/12 rounded-md">

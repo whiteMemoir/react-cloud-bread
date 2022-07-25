@@ -6,7 +6,7 @@ const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
 	const getOrders = async (token) => {
-		return await axios(`${config.api_host}/api/orders`, {
+		return await axios.get(`${config.api_host}/api/orders`, {
 			headers: {
 				authorization: `Bearer ${token}`,
 			},
@@ -14,7 +14,7 @@ export const OrderProvider = ({ children }) => {
 	};
 
 	const createOrder = async (token, data) => {
-		return await axios(`${config.api_host}/api/orders`, data, {
+		return await axios.post(`${config.api_host}/api/orders`, data, {
 			headers: {
 				authorization: `Bearer ${token}`,
 			},
@@ -22,7 +22,7 @@ export const OrderProvider = ({ children }) => {
 	};
 
 	const getInvoiceByOrderId = async (token, orderID) => {
-		return await axios(`${config.api_host}/api/invoices/${orderID}`, {
+		return await axios.get(`${config.api_host}/api/invoices/${orderID}`, {
 			headers: {
 				authorization: `Bearer ${token}`,
 			},

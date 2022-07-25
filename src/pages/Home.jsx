@@ -10,10 +10,12 @@ import { useContext, useEffect, useState } from "react";
 import Paginate from "../components/Home/Paginate";
 import HomeContext from "../contexts/Home/HomeContext";
 import AuthContext from "../contexts/Auth/AuthContext";
+import CartContext from "../contexts/Cart/CartContext";
 
 const Home = () => {
 	const { products, categories, tags } = useContext(HomeContext);
 	const { me, user } = useContext(AuthContext);
+
 	const token = localStorage.getItem("token");
 	useEffect(() => {
 		if (token) {

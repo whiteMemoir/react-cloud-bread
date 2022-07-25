@@ -1,5 +1,6 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../contexts/Auth/AuthContext";
+import CartContext from "../../contexts/Cart/CartContext";
 
 const styles = {
 	Card: ["bg-orange-500"].join(" "),
@@ -41,7 +42,16 @@ const styles = {
 	].join(" "),
 };
 const Product = (props) => {
+	const { saveCart, getCarts, carts, cartCount } = useContext(CartContext);
 	const { user } = useContext(AuthContext);
+
+	const addToCart = () => {
+		try {
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<div className={styles.CardStyle}>
 			<a href="/">
@@ -54,7 +64,7 @@ const Product = (props) => {
 				<p className={styles.CardPrice}>Rp{props.price}</p>
 			</a>
 			{user !== null ? (
-				<button className={styles.CardButtonCart}>
+				<button onClick={addToCart} className={styles.CardButtonCart}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						className="w-5 h-5 mx-1"

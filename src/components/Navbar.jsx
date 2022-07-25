@@ -1,5 +1,5 @@
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import logoImg from "../logo-bread.png";
 import { FaUser } from "react-icons/fa";
 import { IoBagHandle, IoMenuSharp } from "react-icons/io5";
@@ -7,6 +7,7 @@ import SearchInput from "./SearchInput";
 import { Link } from "react-router-dom";
 import { Tooltip } from "antd";
 import AuthContext from "../contexts/Auth/AuthContext";
+import CartContext from "../contexts/Cart/CartContext";
 
 const styles = {
 	Nav: [
@@ -99,7 +100,19 @@ const styles = {
 
 const Navbar = ({ home }) => {
 	const { isHome, setIsHome, user } = useContext(AuthContext);
+	const { productCount, getCarts, carts } = useContext(CartContext);
+	const [isSet, setIsSet] = useState(false);
+	const token = localStorage.getItem("token");
 	setIsHome(home);
+	useEffect(() => {
+		if (!isSet) {
+			getCarts(token);
+			if (carts.length > 0) {
+				setIsSet(true);
+			}
+		}
+	}, [isSet]);
+	console.log(carts);
 	return (
 		<div className={styles.Nav}>
 			<div className={styles.NavLogo}>
@@ -112,12 +125,21 @@ const Navbar = ({ home }) => {
 				<div className={`${styles.NavIcons}`}>
 					<Tooltip title="keranjang" color="volcano" placement="bottomRight">
 						<Link to="/cart" className={styles.IconItem}>
-							<div>
+							<div className="relative">
+								{productCount !== 0 ? (
+									<div className="rounded-full bg-black w-5 h-5 absolute bottom-2 right-3">
+										<span className="text-xs text-white text-center absolute cart-count-position">
+											{productCount}
+										</span>
+									</div>
+								) : (
+									""
+								)}
 								<IoBagHandle />
 							</div>
 						</Link>
 					</Tooltip>
-					<Tooltip title="akun" color="volcano" placement="bottomRight">
+					<Tooltip>
 						<Link to="/account" className={`${styles.IconItem} mr-5`}>
 							<div>
 								<FaUser />

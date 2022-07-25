@@ -23,14 +23,15 @@ function App() {
 						<Route path="*" element={<NotFound />} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/register" element={<Register />} />
-						<Route element={<HomeLayout />}>
-							<Route path="/" element={<Home />} />
-						</Route>
-						<Route element={<AddressLayout />}>
-							<Route element={<CartLayout />}>
+
+						<Route element={<CartLayout />}>
+							<Route element={<HomeLayout />}>
+								<Route path="/" element={<Home />} />
+							</Route>
+							<Route element={<AddressLayout />}>
 								<Route element={<OrderLayout />}>
-									<Route path="/account" element={<Account />} />
 									<Route path="/cart" element={<Cart />} />
+									<Route path="/account" element={<Account />} />
 									<Route path="/checkout" element={<Checkout />} />
 									<Route path="/invoices" element={<Invoices />} />
 								</Route>

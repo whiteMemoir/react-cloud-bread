@@ -103,3 +103,7 @@
 .disabled-page {
 	color: rgb(77, 77, 77);
 }
+.cart-count-position {
+	bottom: 3px;
+	right: 6.5px;
+}

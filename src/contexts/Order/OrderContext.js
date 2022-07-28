@@ -1,16 +1,19 @@
 import axios from "axios";
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import config from "../../config";
 
 const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
+	const [orders, setOrders] = useState([]);
 	const getOrders = async (token) => {
-		return await axios.get(`${config.api_host}/api/orders`, {
-			headers: {
-				authorization: `Bearer ${token}`,
-			},
-		});
+		return await axios
+			.get(`${config.api_host}/api/orders`, {
+				headers: {
+					authorization: `Bearer ${token}`,
+				},
+			})
+			.then((res) => setOrders(res.data.data));
 	};
 
 	const createOrder = async (token, data) => {
@@ -30,7 +33,7 @@ export const OrderProvider = ({ children }) => {
 	};
 	return (
 		<OrderContext.Provider
-			value={{ getOrders, createOrder, getInvoiceByOrderId }}
+			value={{ getOrders, createOrder, getInvoiceByOrderId, orders, setOrders }}
 		>
 			{children}
 		</OrderContext.Provider>

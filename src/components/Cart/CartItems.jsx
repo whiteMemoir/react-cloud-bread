@@ -4,7 +4,6 @@ import { IoClose } from "react-icons/io5";
 import AuthContext from "../../contexts/Auth/AuthContext";
 import CartContext from "../../contexts/Cart/CartContext";
 import AddressContext from "../../contexts/Address/AddressContext";
-import axios from "axios";
 import OrderContext from "../../contexts/Order/OrderContext";
 import { useNavigate } from "react-router-dom";
 
@@ -46,10 +45,10 @@ const CartItems = () => {
 	};
 
 	const substractQty = async (cart) => {
+		console.log(cart);
 		let data = [];
-		const isSameCartItem = carts.find(
-			(item, index) => item[index] === cart[index]
-		);
+		const isSameCartItem = carts.find((item) => item._id === cart._id);
+		console.log(isSameCartItem);
 		if (isSameCartItem.qty === 1) {
 			data = carts
 				.map((cart) => ({
@@ -59,7 +58,7 @@ const CartItems = () => {
 							? cart.qty - 1
 							: cart.qty,
 				}))
-				.filter((item, index) => item[index] !== cart[index]);
+				.filter((item) => item._id !== cart._id);
 		} else if (isSameCartItem) {
 			data = carts.map((cart) => ({
 				...cart,
@@ -75,11 +74,10 @@ const CartItems = () => {
 		setProductCount(data.length);
 		await saveCart(token, data);
 	};
-	const addQty = async (cart) => {
+	const addQty = async (cart, i) => {
+		console.log(cart, i);
 		let data = [];
-		const isSameCartItem = carts.find(
-			(item, index) => item[index] === cart[index]
-		);
+		const isSameCartItem = carts.find((item, index) => item._id === cart._id);
 		if (isSameCartItem) {
 			data = carts.map((cart) => ({
 				...cart,
@@ -93,13 +91,12 @@ const CartItems = () => {
 		await saveCart(token, data);
 	};
 	const deleteProduct = async (cart) => {
+		console.log(cart);
 		let data = [];
 
-		const isSameCartItem = carts.find(
-			(item, index) => item[index] === cart[index]
-		);
+		const isSameCartItem = carts.find((item) => item._id === cart._id);
 		if (isSameCartItem) {
-			data = carts.filter((item, index) => item[index] !== cart[index]);
+			data = carts.filter((item) => item._id !== cart._id);
 		} else {
 			data = [...carts];
 		}
@@ -118,7 +115,7 @@ const CartItems = () => {
 			if (orderAddress !== null) {
 				// console.log(data);
 				await createOrder(token, data);
-				navigate("../orders", { replace: true });
+				navigate("../invoices", { replace: true });
 			}
 		} catch (error) {
 			console.log(error);
@@ -210,7 +207,6 @@ const CartItems = () => {
 			{
 				title: "Detail Alamat",
 				dataIndex: "addressDetail",
-				// render: (text) => <p>{text}</p>,
 			},
 		];
 		addressData = addresses.data.map((address, index) => ({

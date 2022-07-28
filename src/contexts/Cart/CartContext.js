@@ -6,7 +6,6 @@ const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
 	const [carts, setCarts] = useState([]);
-	const [qtyProductCount, setQtyProductCount] = useState(0);
 	const [productCount, setProductCount] = useState(0);
 	const getCarts = async (token) => {
 		return await axios
@@ -16,11 +15,6 @@ export const CartProvider = ({ children }) => {
 			.then((res) => {
 				setCarts(res.data);
 				setProductCount(res.data.length);
-				setQtyProductCount(
-					res.data
-						.map((cart) => cart.qty)
-						.reduce((prev, curr) => prev + curr, 0)
-				);
 			});
 	};
 
@@ -43,7 +37,6 @@ export const CartProvider = ({ children }) => {
 				carts,
 				productCount,
 				setProductCount,
-				qtyProductCount,
 				setCarts,
 			}}
 		>

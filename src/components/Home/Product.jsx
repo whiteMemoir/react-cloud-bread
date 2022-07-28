@@ -42,16 +42,52 @@ const styles = {
 	].join(" "),
 };
 const Product = (props) => {
-	const { saveCart, getCarts, carts, cartCount } = useContext(CartContext);
+	const { saveCart, getCarts, carts, setProductCount, setCarts } =
+		useContext(CartContext);
 	const { user } = useContext(AuthContext);
+	const [isSet, setIsSet] = useState(false);
 
-	const addToCart = () => {
+	const token = localStorage.getItem("token");
+	useEffect(() => {
+		if (!isSet) {
+			getCarts(token);
+			if (carts.length > 0) {
+				setIsSet(true);
+			}
+		}
+	}, [isSet]);
+
+	const addToCart = async (props) => {
 		try {
+			const { name, price, _id, image } = props;
+			let data;
+			if (carts.find((cart, index) => cart.product._id === _id)) {
+				data = carts.map((cart, index) => ({
+					...cart,
+					qty: cart.product._id === _id ? cart.qty + 1 : cart.qty,
+				}));
+				console.log(data);
+			} else {
+				data = [
+					...carts,
+					{
+						name,
+						price,
+						image_url: image,
+						product: props,
+						user: user._id,
+						qty: 1,
+					},
+				];
+				console.log(data);
+			}
+			setProductCount(data.length);
+			setCarts(data);
+			await saveCart(token, data);
 		} catch (error) {
 			console.log(error);
 		}
 	};
-
 	return (
 		<div className={styles.CardStyle}>
 			<a href="/">
@@ -64,7 +100,10 @@ const Product = (props) => {
 				<p className={styles.CardPrice}>Rp{props.price}</p>
 			</a>
 			{user !== null ? (
-				<button onClick={addToCart} className={styles.CardButtonCart}>
+				<button
+					onClick={() => addToCart(props)}
+					className={styles.CardButtonCart}
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						className="w-5 h-5 mx-1"

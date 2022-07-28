@@ -6,11 +6,10 @@ import Navbar from "../components/Navbar";
 import Product from "../components/Home/Product";
 import ProductList from "../components/Home/ProductList";
 import SidebarFilter from "../components/Home/SidebarFilter";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import Paginate from "../components/Home/Paginate";
 import HomeContext from "../contexts/Home/HomeContext";
 import AuthContext from "../contexts/Auth/AuthContext";
-import CartContext from "../contexts/Cart/CartContext";
 
 const Home = () => {
 	const { products, categories, tags } = useContext(HomeContext);

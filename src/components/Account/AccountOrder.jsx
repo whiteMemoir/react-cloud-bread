@@ -15,10 +15,8 @@ const AccountOrder = () => {
 			}
 		}
 	}, [isSet]);
-	console.log(orders);
 	let getOrderItems = orders.map((order) => order.order_items);
-	// console.log(getOrderItems);
-	const expandedRowRender = () => {
+	const expandedRowRender = (row) => {
 		const columns = [
 			{
 				title: "Barang",
@@ -36,16 +34,25 @@ const AccountOrder = () => {
 				key: "totalHarga",
 			},
 		];
-		const data = getOrderItems.forEach((orderItem) => {
-			return orderItem.map((item, index) => ({
-				key: index,
-				barang: item.name,
-				jumlah: item.qty,
-				totalHarga: item.price * item.qty,
-			}));
-		});
+		let data = [];
+		for (let i = 0; i < getOrderItems.length; i++) {
+			data[i] = [];
+			for (let index = 0; index < getOrderItems[i].length; index++) {
+				let objectData = {
+					key: getOrderItems[i][index],
+					barang: getOrderItems[i][index].name,
+					jumlah: getOrderItems[i][index].qty,
+					totalHarga:
+						getOrderItems[i][index].price * getOrderItems[i][index].qty,
+				};
+				data[i].push(objectData);
+			}
+		}
+		// console.log(data);
 
-		return <Table columns={columns} dataSource={data} pagination={false} />;
+		return (
+			<Table columns={columns} dataSource={data[row.key]} pagination={false} />
+		);
 	};
 
 	const columns = [
@@ -82,37 +89,24 @@ const AccountOrder = () => {
 		const grandTotal = totalCount + order.delivery_fee;
 		return {
 			key: index,
-			orderId: order._id,
+			orderId: order.order_number,
 			total: grandTotal,
 			status: order.status,
 		};
 	});
-
-	// for (let i = 0; i < 4; i++) {
-	// 	data.push({
-	// 		key: i.toString(),
-	// 		orderId: "Screem",
-	// 		total: "iOS",
-	// 		status: "10.3.4.5654",
-	// 	});
-	// }
-
+	console.log(orders);
 	return (
 		<>
-			<div className="">
-				<EmptyData />
-			</div>
-			<div className="">
+			{orders.length > 0 ? (
 				<Table
 					columns={columns}
-					expandable={{
-						expandedRowRender,
-						defaultExpandedRowKeys: ["0"],
-					}}
+					expandedRowRender={expandedRowRender}
 					dataSource={data}
 					size="middle"
 				/>
-			</div>
+			) : (
+				<EmptyData />
+			)}
 		</>
 	);
 };

@@ -6,6 +6,7 @@ import CartContext from "../../contexts/Cart/CartContext";
 import AddressContext from "../../contexts/Address/AddressContext";
 import OrderContext from "../../contexts/Order/OrderContext";
 import { useNavigate } from "react-router-dom";
+import config from "../../config";
 
 const CartItems = () => {
 	const navigate = useNavigate();
@@ -189,7 +190,7 @@ const CartItems = () => {
 		];
 		cartData = carts.map((cart, index) => ({
 			key: index,
-			gambar: `http://localhost:3003/images/${cart.product.image}`,
+			gambar: `${config.api_host}/images/${cart.product.image}`,
 			barang: cart.name,
 			price: cart.price,
 			qty: cart,

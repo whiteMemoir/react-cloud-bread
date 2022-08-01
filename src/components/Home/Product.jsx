@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import config from "../../config";
 import AuthContext from "../../contexts/Auth/AuthContext";
 import CartContext from "../../contexts/Cart/CartContext";
 
@@ -93,7 +94,7 @@ const Product = (props) => {
 			<a href="/">
 				<img
 					className={styles.CardImage}
-					src={`http://localhost:3003/images/${props.image}`}
+					src={`${config.api_host}/images/${props.image}`}
 					alt="T-Shirt"
 				/>
 				<h4 className={styles.CardTitle}>{props.name}</h4>
